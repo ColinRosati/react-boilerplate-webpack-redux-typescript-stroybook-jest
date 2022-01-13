@@ -1,10 +1,27 @@
-import "../src/assets/styles/index.scss";
+import { ArgsTable, Description, Primary, Title } from '@storybook/addon-docs';
+
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
+  docs: {
+    page: () => (
+      <>
+        <Title />
+        <Description />
+        <Primary />
+        <ArgsTable />
+      </>
+    ),
+  },
+  layout: 'centered',
+  options: {
+    showPanel: true,
+    selectedPanel: 'controls',
+  },
+  previewTabs: {
+    canvas: {
+      hidden: true,
+    },
+    docs: {
+      hidden: true,
     },
   },
 };

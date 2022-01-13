@@ -1,39 +1,42 @@
-import "regenerator-runtime/runtime";
-import path from "path";
-import globImporter from "node-sass-glob-importer";
-import TsconfigPathsWebpackPlugin from "tsconfig-paths-webpack-plugin";
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const path = require('path')
+
 module.exports = {
-  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
-  typescript: {
-    reactDocgen: "none",
-  },
-  webpackFinal: async (config: any) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      assets: path.resolve(__dirname, "../src/assets"),
-    };
-    config.resolve?.plugins?.push(
-      new TsconfigPathsWebpackPlugin({
-        configFile: path.resolve(__dirname, "../tsconfig.json"),
-      })
-    );
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        "style-loader",
-        "css-loader",
-        {
-          loader: "sass-loader",
-          options: {
-            sassOptions: {
-              importer: globImporter(),
+  addons: [
+    "@storybook/addon-essentials",
+  ],
+  // Note the mini match prefix search *stories does not work
+  stories: ["../src/**/stories.@(tsx|ts|jsx|js)"],
+
+  webpackFinal: async config => {
+    // declare storybook's path resolution to be defined by root tsconfig
+    config.resolve.plugins = [
+      ...(config.resolve.plugins || []),
+      new TsconfigPathsPlugin({
+        extensions: config.resolve.extensions,
+      }),
+    ];
+
+    // rule overide for scss modules
+    config.module.rules.push(
+      {
+        test: /\.s(a|c)ss$/,
+        include: path.resolve(__dirname, '../'),
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                auto: true,
+                localIdentName: '[name]__[local]--[hash:base64:5]',
+              },
             },
           },
-        },
-      ],
-      include: path.resolve(__dirname, "../"),
-    });
+          'sass-loader'
+        ],
+      },
+    );
     return config;
-  },
+}
 };
