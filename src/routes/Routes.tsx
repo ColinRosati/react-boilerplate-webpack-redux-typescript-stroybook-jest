@@ -1,14 +1,12 @@
 import { FC } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Home from "views/Home/Home";
 
-const Routes: FC = () =>(
-  <Switch>
-    <Route path="/">
-      <Home />
-    </Route>
-  </Switch>
+const RouteTree: FC = () =>(
+  <Routes>
+    <Route path="/" element={<Home/>}/>
+  </Routes>
 );
 
-export default Routes;
+export default RouteTree;
