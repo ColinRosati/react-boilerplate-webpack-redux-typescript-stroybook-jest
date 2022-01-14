@@ -4,7 +4,12 @@ const initialState = {
   user: null,
 };
 
-export default function(state = initialState, action) {
+type ActionType = {
+  type: string;
+  payload: any;
+}
+
+export default function(state = initialState, action: ActionType) {
   switch (action.type) {
     case ADD_USER: {
       return {

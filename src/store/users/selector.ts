@@ -1,1 +1,3 @@
-export const getUsersState = store => store.todos;
+import { RootState } from 'store/types';
+
+export const getUsersState = (store: RootState) => store.usersReducer;
