@@ -16,9 +16,6 @@ module.exports = {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "index.css",
-    }),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
     }),
@@ -38,7 +35,9 @@ module.exports = {
             loader: "css-loader",
             options: {
               importLoaders: 1,
-              modules: true,
+              modules: {
+                localIdentName: "[name]__[local]___[hash:base64:5]",
+            } ,
             },
           },
         ],
