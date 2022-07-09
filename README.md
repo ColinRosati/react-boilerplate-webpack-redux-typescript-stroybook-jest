@@ -5,6 +5,7 @@
 ![TYPESCRIPT](https://place-hold.it/130x33/104/fff?text=TYPESCRIPT&bold)&nbsp;
 ![STORYBOOK](https://place-hold.it/130x33/411/fff?text=STORYBOOK&bold)&nbsp;
 
+Custom boiler plate for my projects 🐛
 ## What's Included
 
 - `redux`
